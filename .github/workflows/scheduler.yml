@@ -18,21 +18,19 @@ jobs:
         with:
           node-version: '20'
 
-      # Pasang dependencies (axios, fs, dll.)
+      # Pasang dependencies
       - name: Install dependencies
         run: npm install
 
-      # Jalankan script mks.js (Mengira dan mengemas kini mks.json)
+      # Jalankan script mks.js
       - name: Run MKS Scraper
         run: node mks.js
 
-      # Guna git-auto-commit-action v2 yang stabil
+      # Guna git-auto-commit-action v2
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v2
         with:
           commit_message: Update MKS Gold Prices
-          # Menggunakan bot rasmi GitHub untuk memastikan push berjaya
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com> 
         env:
-          # Token standard yang WAJIB untuk membenarkan Action PUSH commit
+          # Token standard yang WAJIB
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

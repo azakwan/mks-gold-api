@@ -1,42 +1,34 @@
 name: MKS Gold Price Scheduler
-
-# Kebenaran ini membenarkan Action untuk 'WRITE' (menulis/mengubah) fail ke repository.
 permissions:
-  contents: write 
-
-# Bila Action ini akan berjalan
+  contents: write
 on:
-  # Tetapkan untuk berjalan setiap 5 minit (Pastikan indentation betul)
+  # Tetapkan untuk berjalan setiap 5 minit
   schedule:
     - cron: '*/5 * * * *'
-  
   # Benarkan trigger manual
   workflow_dispatch:
 
 jobs:
-  scrape_and_commit:
+  run-scraper:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
+      - uses: actions/checkout@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # Pasang dependencies (axios dan fs)
       - name: Install dependencies
         run: npm install
 
+      # Jalankan script mks.js (Mengemas kini mks.json)
       - name: Run MKS Scraper
         run: node mks.js
-        
-      # Commit dan push fail mks.json yang telah dikemaskini
-      - name: Commit and Push mks.json
-        uses: stefanzweifel/git-auto-commit-action@v5
+
+      # Guna git-auto-commit-action v2 yang lebih stabil
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v2  # <--- DITUKAR KE v2
         with:
           commit_message: Update MKS Gold Prices
-          # PENTING: Fail yang perlu di-commit
-          files: mks.json
-          # PENTING: Commit ke branch sedia ada
-          create_branch: false
+          # v2 secara automatik menambah dan mengkomit semua fail yang diubah

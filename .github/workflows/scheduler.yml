@@ -26,13 +26,13 @@ jobs:
       - name: Run MKS Scraper
         run: node mks.js
 
-      # Guna git-auto-commit-action v2 yang stabil, dan gunakan GITHUB_TOKEN
+      # Guna git-auto-commit-action v2 yang stabil
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v2
         with:
           commit_message: Update MKS Gold Prices
-          # Penting: Pastikan 'azakwan' adalah nama pengguna GitHub yang betul
-          commit_author: azakwan <azakwan@users.noreply.github.com> 
+          # Menggunakan bot rasmi GitHub untuk memastikan push berjaya
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com> 
         env:
-          # TOKEN WAJIB untuk membenarkan Action PUSH commit ke repo
+          # Token standard yang WAJIB untuk membenarkan Action PUSH commit
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

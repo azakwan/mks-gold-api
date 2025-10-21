@@ -1,12 +1,12 @@
 name: MKS Gold Price Scheduler
 
-# BLOK PERMISSION YANG TELAH DITAMBAH (PENTING)
+# Kebenaran ini membenarkan Action untuk 'WRITE' (menulis/mengubah) fail ke repository.
 permissions:
   contents: write 
 
-# BLOK JADUAL (Telah diselaraskan jarak tepinya)
+# Bila Action ini akan berjalan
 on:
-  # Tetapkan untuk berjalan setiap 5 minit
+  # Tetapkan untuk berjalan setiap 5 minit (Pastikan indentation betul)
   schedule:
     - cron: '*/5 * * * *'
   
@@ -36,4 +36,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update MKS Gold Prices
+          # PENTING: Fail yang perlu di-commit
           files: mks.json
+          # PENTING: Commit ke branch sedia ada
+          create_branch: false

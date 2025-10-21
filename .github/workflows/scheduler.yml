@@ -1,5 +1,5 @@
 name: MKS Gold Price Scheduler
-
+permissions
 on:
   # Tetapkan untuk berjalan setiap 5 minit
   schedule:

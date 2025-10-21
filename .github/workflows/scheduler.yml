@@ -1,0 +1,37 @@
+name: MKS Gold Price Scheduler
+
+on:
+  # Tetapkan untuk berjalan setiap 5 minit
+  schedule:
+    - cron: '*/5 * * * *'
+  # Benarkan trigger manual
+  workflow_dispatch:
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # Menggunakan GITHUB_TOKEN lalai yang mencukupi untuk repositori awam
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} 
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Web Scraper (Generate mks.json)
+        run: node mks.js
+
+      - name: Commit and Push new mks.json
+        # Action pihak ketiga untuk commit dan push fail yang diubah
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: 'mks.json'
+          commit_message: 'AUTO: Update MKS gold price data'
+          branch: main

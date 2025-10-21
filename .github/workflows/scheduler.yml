@@ -1,37 +1,39 @@
 name: MKS Gold Price Scheduler
-permissions
+
+# BLOK PERMISSION YANG TELAH DITAMBAH (PENTING)
+permissions:
+  contents: write 
+
+# BLOK JADUAL (Telah diselaraskan jarak tepinya)
 on:
   # Tetapkan untuk berjalan setiap 5 minit
   schedule:
     - cron: '*/5 * * * *'
+  
   # Benarkan trigger manual
   workflow_dispatch:
 
 jobs:
-  update-prices:
+  scrape_and_commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-        # Menggunakan GITHUB_TOKEN lalai yang mencukupi untuk repositori awam
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} 
       
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' 
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run Web Scraper (Generate mks.json)
+      - name: Run MKS Scraper
         run: node mks.js
-
-      - name: Commit and Push new mks.json
-        # Action pihak ketiga untuk commit dan push fail yang diubah
+        
+      # Commit dan push fail mks.json yang telah dikemaskini
+      - name: Commit and Push mks.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: 'mks.json'
-          commit_message: 'AUTO: Update MKS gold price data'
-          branch: main
+          commit_message: Update MKS Gold Prices
+          files: mks.json

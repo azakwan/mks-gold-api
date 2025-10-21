@@ -5,17 +5,17 @@ const fs = require('fs');
 const path = require('path');
 
 // =========================================================================
-// !!! PARAMETER WAJIB KEMAS KINI !!!
-// Harga telah dilaraskan agar lebih dekat dengan harga MS Gold anda.
+// !!! PELARASAN MARGIN KEUNTUNGAN !!!
+// (Dilaraskan ke 4.40 dan 0.950 untuk mendapatkan harga lebih rendah)
 // =========================================================================
 // 1. KUNCI API ANDA
 const API_KEY = 'goldapi-58n6619mh0xp56k-io'; 
 
 // 2. Kadar Pertukaran USD ke MYR
-const USD_TO_MYR_RATE = 4.50; // Dilaraskan untuk merendahkan harga MYR yang dikira
+const USD_TO_MYR_RATE = 4.40; // <--- DILARASKAN KE 4.40
 
-// 3. Faktor Spread Beli Balik Anda 
-const YOUR_BUY_SPREAD_FACTOR = 0.965; // Dilaraskan untuk merendahkan harga beli balik anda
+// 3. Faktor Spread Beli Balik Anda (Margin Keuntungan Anda)
+const YOUR_BUY_SPREAD_FACTOR = 0.950; // <--- DILARASKAN KE 0.950
 // =========================================================================
 
 const outputFilePath = path.join(__dirname, 'mks.json');

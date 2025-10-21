@@ -22,15 +22,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Jalankan script mks.js
+      # Jalankan script mks.js (Harga baru yang anda laraskan)
       - name: Run MKS Scraper
         run: node mks.js
 
-      # Guna git-auto-commit-action v2
+      # Guna git-auto-commit-action v5
       - name: Commit files
-        uses: stefanzweifel/git-auto-commit-action@v2
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update MKS Gold Prices
-        env:
-          # Token standard yang WAJIB
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Menggunakan force: true untuk menyelesaikan ralat rejected/non-fast-forward
+          force: true # <--- BARIS UTAMA UNTUK SOLUSI INI

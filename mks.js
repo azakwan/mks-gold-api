@@ -6,15 +6,16 @@ const path = require('path');
 
 // =========================================================================
 // !!! PARAMETER WAJIB KEMAS KINI !!!
+// Harga telah dilaraskan agar lebih dekat dengan harga MS Gold anda.
 // =========================================================================
-// 1. KUNCI API ANDA (Telah dimasukkan)
+// 1. KUNCI API ANDA
 const API_KEY = 'goldapi-58n6619mh0xp56k-io'; 
 
-// 2. Kadar Pertukaran USD ke MYR (Sila kemas kini nilai ini)
-const USD_TO_MYR_RATE = 4.70; // Contoh: 1 USD = 4.70 MYR
+// 2. Kadar Pertukaran USD ke MYR
+const USD_TO_MYR_RATE = 4.50; // Dilaraskan untuk merendahkan harga MYR yang dikira
 
-// 3. Faktor Spread Beli Balik Anda (Anggapan: Anda beli balik pada 98.5% dari harga pasaran)
-const YOUR_BUY_SPREAD_FACTOR = 0.985; 
+// 3. Faktor Spread Beli Balik Anda 
+const YOUR_BUY_SPREAD_FACTOR = 0.965; // Dilaraskan untuk merendahkan harga beli balik anda
 // =========================================================================
 
 const outputFilePath = path.join(__dirname, 'mks.json');
@@ -41,9 +42,7 @@ const webScraper = async () => {
         // Harga Spot Emas 999.9/Ounce (USD)
         const usdPerOunce = spotData.price; 
         
-        // ***************************************************************
         // LAKUKAN PENUKARAN: USD/Ounce -> MYR/Gram (Harga Pasaran 999.9)
-        // ***************************************************************
         const myrPerGram9999_Market = (usdPerOunce / OUNCE_TO_GRAM_FACTOR) * USD_TO_MYR_RATE;
 
         // Harga Beli Balik Anda (Buy Back)
@@ -53,6 +52,7 @@ const webScraper = async () => {
         const sell9999 = myrPerGram9999_Market * 1.015;
 
         // Kalkulasi Harga Beli Balik (Buy Back) untuk gred lain
+        // Guna Faktor Kemurnian (Purity Factor)
         const buy999 = buy9999 * 0.98; // 99.9% dari 99.99%
         const buy916 = buy9999 * 0.90; // 91.6% dari 99.99%
         
